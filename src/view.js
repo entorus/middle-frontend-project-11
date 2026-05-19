@@ -59,11 +59,18 @@ export function createTodoView(root) {
     `
 
   const form = document.getElementById('rss-form')
+  const input = document.getElementById('rss-url') // todo rename
   function onSubmit(handler) {
     form.addEventListener('submit', (e) => {
       e.preventDefault()
       const url = e.target.elements.rssUrl.value
       handler(url)
+    })
+  }
+  function onChange(handler) {
+    input.addEventListener('input', (e) => {
+      handler(e.target.value)
+      console.log(e.target.value)
     })
   }
 
@@ -80,7 +87,8 @@ export function createTodoView(root) {
 
   return {
     render,
-    onSubmit
+    onSubmit,
+    onChange,
   }
 }
 

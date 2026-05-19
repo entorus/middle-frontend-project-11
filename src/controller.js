@@ -2,7 +2,7 @@ import { subscribe, snapshot } from 'valtio/vanilla'
 
 export function createTodoController(model, actions, view) {
   view.onSubmit(actions.add)
-  //   view.onToggle(actions.toggle)
+  view.onChange(actions.add)
   //   view.onRemove(actions.remove)
   //   view.onFilter(actions.setFilter)
 
