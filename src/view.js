@@ -1,5 +1,5 @@
 export function createTodoView(root) {
-    root.innerHTML = `
+  root.innerHTML = `
         <header class="bg-dark text-white py-5">
             <div class="container">
                 <div class="mx-auto" style="max-width: 860px;">
@@ -57,19 +57,31 @@ export function createTodoView(root) {
             </div>
         </footer>
     `
-    const msgContainer = document.getElementById('validation-msg')
-    const msg = document.createElement('div')
-    msg.classList.add('invalid-feedback')
-    msg.innerText = 'Some test text'
-    msgContainer.append(msg)
 
-    function render(state) {
-        console.log(2222, state)
-    }
+  const form = document.getElementById('rss-form')
+  function onSubmit(handler) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const url = e.target.elements.rssUrl.value
+      handler(url)
+    })
+  }
 
-    return {
-        render
+  function render(state) {
+    console.log(2222, state)
+    if (state.form.error !== null) {
+      const msgContainer = document.getElementById('validation-msg')
+      const msg = document.createElement('div')
+      msg.classList.add('text-danger')
+      msg.innerText = state.form.error
+      msgContainer.append(msg)
     }
+  }
+
+  return {
+    render,
+    onSubmit
+  }
 }
 
 // invalid-feedback

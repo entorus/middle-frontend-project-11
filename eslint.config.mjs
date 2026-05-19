@@ -26,7 +26,8 @@ export default defineConfig([
       sourceType: 'module'
     },
     rules: {
-      '@stylistic/semi': ['error', 'never']
+      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/indent': ['error', 2]
     }
   },
 
@@ -41,7 +42,8 @@ export default defineConfig([
     rules: {
       'html/require-lang': 'error',
       'html/require-title': 'error',
-      'html/no-duplicate-id': 'error'
+      'html/no-duplicate-id': 'error',
+      'html/indent': ['error', 'tab']
     }
   },
 ])

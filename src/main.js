@@ -6,7 +6,6 @@ import { createTodoController } from './controller.js'
 
 const root = document.getElementById('app')
 const view = createTodoView(root)
-console.log(33333, view)
 createTodoController(rssModel, rssActions, view)
 
 // // import { object, string, number, date } from 'yup'
