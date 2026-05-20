@@ -34,7 +34,7 @@ export function createTodoView(root) {
                         </div>
 
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-light btn-lg px-5">
+                            <button id="rss-submit-button" type="submit" class="btn btn-light btn-lg px-5">
                                 Добавить
                             </button>
                         </div>
@@ -65,6 +65,7 @@ export function createTodoView(root) {
       e.preventDefault()
       const url = e.target.elements.rssUrl.value
       handler(url)
+      input.value = ''
     })
   }
   function onChange(handler) {
@@ -75,13 +76,21 @@ export function createTodoView(root) {
   }
 
   function render(state) {
-    console.log(2222, state)
+    const msgContainer = document.getElementById('validation-msg')
+    const submitButton = document.getElementById('rss-submit-button')
+    msgContainer.innerHTML = ''
     if (state.form.error !== null) {
-      const msgContainer = document.getElementById('validation-msg')
       const msg = document.createElement('div')
       msg.classList.add('text-danger')
       msg.innerText = state.form.error
       msgContainer.append(msg)
+      submitButton.disabled = true
+      input.classList.add('is-invalid')
+    }else{
+      msgContainer.innerHTML = ''
+      submitButton.disabled = false
+      input.classList.remove('is-invalid')
+      input.focus()
     }
   }
 

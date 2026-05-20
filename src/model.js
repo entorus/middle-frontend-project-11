@@ -14,15 +14,31 @@ const schema = Yup.string()
   .required('Не должно быть пустым')
 
 export const rssActions = {
-  add(url) {
-    schema.validate(url).then((a) => {
-      rssModel.form.valid = true
-      console.log(1111, url, a)
-    }).catch(({ message }) => {
-      rssModel.form.valid = false
-      rssModel.form.error = message
-      console.log(2222, message)
-    })
-    return null
+  validate(url) {
+    return schema.validate(url)
+      .then(() => {
+        rssModel.form.valid = true
+        rssModel.form.error = null
+        const isExisting = rssModel.items.includes(url)
+        if (isExisting) {
+          rssModel.form.valid = false
+          rssModel.form.error = 'Такой URL уже есть'
+        }else{
+          return true
+        }
+      }).catch(({ message }) => {
+        rssModel.form.valid = false
+        rssModel.form.error = message
+        return false
+      })
+
   },
+  add(url) {
+    rssActions.validate(url)
+      .then((isValid) => {
+        if (isValid)
+          rssModel.items.push(url)
+        console.log(555, rssModel)
+      })
+  }
 }
