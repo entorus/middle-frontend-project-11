@@ -1,5 +1,6 @@
 import * as Yup from 'yup'
 import { proxy } from 'valtio/vanilla'
+import { t } from './locales/i18n.js'
 
 export const rssModel = proxy({
   items: [],
@@ -10,8 +11,8 @@ export const rssModel = proxy({
 })
 
 const schema = Yup.string()
-  .url('Ссылка должна быть валидным URL')
-  .required('Не должно быть пустым')
+  .url(t('notValid'))
+  .required(t('notEmpty'))
 
 export const rssActions = {
   validate(url) {

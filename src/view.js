@@ -1,20 +1,25 @@
+import { 
+  // changeLanguage, 
+  t
+} from './locales/i18n.js'
+
 export function createTodoView(root) {
   root.innerHTML = `
         <header class="bg-dark text-white py-5">
             <div class="container">
                 <div class="mx-auto" style="max-width: 860px;">
                     <h1 class="display-2 fw-normal mb-2">
-                        RSS агрегатор
+                        RSS ${t('agg')}
                     </h1>
 
                     <p class="fs-5 mb-4">
-                        Начните читать RSS сегодня! Это легко, это красиво.
+                      ${t('startToday')}
                     </p>
 
                     <form id="rss-form" class="row g-4 align-items-start">
                         <div class="col">
                             <label for="rss-url" class="visually-hidden">
-                                Ссылка RSS
+                                ${t('link')} RSS
                             </label>
 
                             <input
@@ -22,20 +27,20 @@ export function createTodoView(root) {
                                 name="rssUrl"
                                 type="url"
                                 class="form-control form-control-lg fw-semibold"
-                                placeholder="Ссылка RSS"
+                                placeholder="${t('link')} RSS"
                                 required
                             />
 
                             <div class="form-text text-secondary mt-2">
-                                Пример: https://lorem-rss.hexlet.app/feed
+                                <span class="text-capitalize">${t('example')}</span>: https://lorem-rss.hexlet.app/feed
                             </div>
                             <div id="validation-msg">
                             </div>
                         </div>
 
                         <div class="col-auto">
-                            <button id="rss-submit-button" type="submit" class="btn btn-light btn-lg px-5">
-                                Добавить
+                            <button id="rss-submit-button" type="submit" class="text-capitalize btn btn-primary btn-lg px-5">
+                                ${t('add')}
                             </button>
                         </div>
                     </form>
@@ -69,6 +74,8 @@ export function createTodoView(root) {
     })
   }
   function onChange(handler) {
+    // changeLanguage('en')
+    // console.log(2111, t('key'))
     input.addEventListener('input', (e) => {
       handler(e.target.value)
       console.log(e.target.value)
@@ -87,7 +94,7 @@ export function createTodoView(root) {
       submitButton.disabled = true
       input.classList.add('is-invalid')
     }else{
-      msgContainer.innerHTML = ''
+      msgContainer.innerHTML = '' // todo add successfull message
       submitButton.disabled = false
       input.classList.remove('is-invalid')
       input.focus()
