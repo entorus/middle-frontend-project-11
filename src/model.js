@@ -1,5 +1,6 @@
 import * as Yup from 'yup'
 import { proxy } from 'valtio/vanilla'
+import { getFeed } from './api/rssApi.js'
 import { t } from './locales/i18n.js'
 
 export const rssModel = proxy({
@@ -37,9 +38,13 @@ export const rssActions = {
   add(url) {
     rssActions.validate(url)
       .then((isValid) => {
-        if (isValid)
+        if (isValid) {
           rssModel.items.push(url)
-        console.log(555, rssModel)
+          getFeed().then((res) => {
+            console.log(res)
+          })
+        }
+        console.log(rssModel)
       })
   }
 }

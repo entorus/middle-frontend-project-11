@@ -75,10 +75,8 @@ export function createTodoView(root) {
   }
   function onChange(handler) {
     // changeLanguage('en')
-    // console.log(2111, t('key'))
     input.addEventListener('input', (e) => {
       handler(e.target.value)
-      console.log(e.target.value)
     })
   }
 
