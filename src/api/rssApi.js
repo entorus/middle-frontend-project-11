@@ -10,7 +10,13 @@ function parseXML(data) {
   }
 
   const channelInfo = xml.querySelector('channel')
-  const items = Array.from(channelInfo.querySelectorAll('item')).map((item) => {
+
+  const info = {
+    title: channelInfo.querySelector('title')?.textContent ?? '',
+    description: channelInfo.querySelector('description')?.textContent ?? '',
+  }
+
+  info.posts = Array.from(channelInfo.querySelectorAll('item')).map((item) => {
     return {
       title: item.querySelector('title')?.textContent ?? '',
       description: item.querySelector('description')?.textContent ?? '',
@@ -20,9 +26,10 @@ function parseXML(data) {
       pubDate: item.querySelector('pubDate')?.textContent ?? '',
     }
   })
+  return info
 }
 
-export function getFeed() {
+export function getFeed(url) {
   return httpClient.get('/feed').then((response) => {
     return parseXML(response.data?.contents)
   })

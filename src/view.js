@@ -49,8 +49,8 @@ export function createTodoView(root) {
         </header>
 
         <main class="flex-grow-1">
-            <div class="container py-4">
-            </div>
+          <div id="rss-main-container" class="container py-4">
+          </div>
         </main>
 
         <footer class="border-top bg-light py-3 text-center">
@@ -74,12 +74,13 @@ export function createTodoView(root) {
     })
   }
   function onChange(handler) {
-    // changeLanguage('en')
     input.addEventListener('input', (e) => {
       handler(e.target.value)
     })
   }
 
+  // changeLanguage('en')
+    
   function render(state) {
     const msgContainer = document.getElementById('validation-msg')
     const submitButton = document.getElementById('rss-submit-button')
@@ -97,6 +98,99 @@ export function createTodoView(root) {
       input.classList.remove('is-invalid')
       input.focus()
     }
+    if (state.feeds.length > 0)
+      renderPostsContainerLayout(state)
+  }
+
+  function renderPostsContainerLayout(state) {
+    const main = document.getElementById('rss-main-container')
+    // main.innerHTML = ''
+    const wrapper = document.createElement('div')
+    wrapper.className = 'row mb-3'
+    main.appendChild(wrapper)
+
+    const postsContainer = document.createElement('div')
+    postsContainer.id = 'rss-posts-container'
+    postsContainer.className = 'col-md-8 themed-grid-col'
+
+    const postsTitle = document.createElement('h3')
+    postsTitle.className = 'mb-3'
+    postsTitle.textContent = t('posts')
+
+    postsContainer.appendChild(postsTitle)
+    wrapper.appendChild(postsContainer)
+
+    const feedsContainer = document.createElement('div')
+    feedsContainer.id = 'rss-feed-container'
+    feedsContainer.className = 'col-6 col-md-4 themed-grid-col'
+
+    const feedsTitle = document.createElement('h3')
+    feedsTitle.className = 'mb-3'
+    feedsTitle.textContent = t('feeds')
+
+    feedsContainer.appendChild(feedsTitle)
+
+    wrapper.appendChild(feedsContainer)
+
+    renderFeeds(feedsContainer, state)
+    renderPosts(postsContainer, state)
+  }
+
+  function renderPosts(container, state) {
+    console.log(333, state)
+    state.feeds[0].posts.forEach((post) => { // todo pass index here
+      const postRow = document.createElement('div')
+      postRow.className = 'row mb-3'
+
+      const linkCol = document.createElement('div')
+      linkCol.className = 'col-md-9'
+
+      const link = document.createElement('a')
+      link.href = post.link
+      link.textContent = post.title
+
+      linkCol.appendChild(link)
+
+      const buttonCol = document.createElement('div')
+      buttonCol.className = 'col-md-1'
+
+      const button = document.createElement('button')
+      button.type = 'button'
+      button.className = 'btn btn-outline-primary'
+      button.textContent = t('view')
+
+      // button.addEventListener('click', () => {
+      // })
+
+      buttonCol.appendChild(button)
+
+      postRow.appendChild(linkCol)
+      postRow.appendChild(buttonCol)
+
+      container.appendChild(postRow)
+    })
+  }
+
+  function renderFeeds(container, state) {
+    state.feeds.forEach((feed) => {
+      const feedRow = document.createElement('div')
+      feedRow.className = 'row mb-3'
+
+      const feedTitle = document.createElement('span')
+      feedTitle.textContent = feed.title
+
+      const br = document.createElement('br')
+
+      const description = document.createElement('small')
+      description.className = 'text-secondary'
+      description.textContent = feed.description
+
+      feedRow.appendChild(feedTitle)
+      feedRow.appendChild(br)
+      feedRow.appendChild(description)
+
+      container.appendChild(feedRow)
+    })
   }
 
   return {

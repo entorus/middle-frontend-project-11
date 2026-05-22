@@ -12,7 +12,10 @@ i18next.init({
         add: 'add',
         example: 'example',
         notValid: 'The link must be a valid URL.',
-        notEmpty: 'Should not be empty'
+        notEmpty: 'Should not be empty',
+        feeds: 'Feeds',
+        posts: 'Posts',
+        view: 'View'
       }
     },
     ru: {
@@ -23,7 +26,10 @@ i18next.init({
         add: 'добавить',
         example: 'пример',
         notValid: 'Ссылка должна быть валидным URL',
-        notEmpty: 'Не должно быть пустым'
+        notEmpty: 'Не должно быть пустым',
+        feeds: 'Фиды',
+        posts: 'Посты',
+        view: 'Просмотр'
       }
     }
   }
