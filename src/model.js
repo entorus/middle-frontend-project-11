@@ -5,7 +5,7 @@ import { t } from './locales/i18n.js'
 
 export const rssModel = proxy({
   urls: [],
-  feeds: [],
+  feeds: null,
   form: {
     valid: false,
     error: null,
@@ -41,11 +41,22 @@ export const rssActions = {
       .then((isValid) => {
         if (isValid) {
           rssModel.urls.push(url)
-          getFeed(url).then((res) => {
-            rssModel.feeds.push(res)
-            console.log(res)
-          })
+          rssActions.startFeedUpdate(url)
         }
       })
+  },
+  startFeedUpdate(url) {
+    function update() {
+      getFeed(url).then((res) => {
+        rssModel.feeds = res
+      })
+        .catch((error) => {
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(update, 5000)
+        })
+    }
+    update()
   }
 }

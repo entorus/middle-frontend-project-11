@@ -98,13 +98,13 @@ export function createTodoView(root) {
       input.classList.remove('is-invalid')
       input.focus()
     }
-    if (state.feeds.length > 0)
+    if (state.feeds !== null)
       renderPostsContainerLayout(state)
   }
 
   function renderPostsContainerLayout(state) {
     const main = document.getElementById('rss-main-container')
-    // main.innerHTML = ''
+    main.innerHTML = ''
     const wrapper = document.createElement('div')
     wrapper.className = 'row mb-3'
     main.appendChild(wrapper)
@@ -137,8 +137,7 @@ export function createTodoView(root) {
   }
 
   function renderPosts(container, state) {
-    console.log(333, state)
-    state.feeds[0].posts.forEach((post) => { // todo pass index here
+    state.feeds.posts.forEach((post) => { // todo pass index here
       const postRow = document.createElement('div')
       postRow.className = 'row mb-3'
 
@@ -172,25 +171,24 @@ export function createTodoView(root) {
   }
 
   function renderFeeds(container, state) {
-    state.feeds.forEach((feed) => {
-      const feedRow = document.createElement('div')
-      feedRow.className = 'row mb-3'
+    const feed = state.feeds
+    const feedRow = document.createElement('div')
+    feedRow.className = 'row mb-3'
 
-      const feedTitle = document.createElement('span')
-      feedTitle.textContent = feed.title
+    const feedTitle = document.createElement('span')
+    feedTitle.textContent = feed.title
 
-      const br = document.createElement('br')
+    const br = document.createElement('br')
 
-      const description = document.createElement('small')
-      description.className = 'text-secondary'
-      description.textContent = feed.description
+    const description = document.createElement('small')
+    description.className = 'text-secondary'
+    description.textContent = feed.description
 
-      feedRow.appendChild(feedTitle)
-      feedRow.appendChild(br)
-      feedRow.appendChild(description)
+    feedRow.appendChild(feedTitle)
+    feedRow.appendChild(br)
+    feedRow.appendChild(description)
 
-      container.appendChild(feedRow)
-    })
+    container.appendChild(feedRow)
   }
 
   return {
