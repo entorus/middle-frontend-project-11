@@ -84,6 +84,7 @@ export function createTodoView(root) {
   const form = document.getElementById('rss-form')
   const input = document.getElementById('rss-url')
   const main = document.getElementById('rss-main-container')
+  const rssModal = document.getElementById('modal')
     
   function onSubmit(handler) {
     form.addEventListener('submit', (e) => {
@@ -109,29 +110,44 @@ export function createTodoView(root) {
       handler(href)
     })
   }
+
+  function onCloseModal() {
+    const closeButtons = document.querySelectorAll('[data-close-modal]')
+    closeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        rssModal.style.display = 'none'
+        rssModal.classList.remove('show')
+      })
+    })
+  }
     
   function render(state) {
     const msgContainer = document.getElementById('validation-msg')
-    // const submitButton = document.getElementById('rss-submit-button')
     msgContainer.innerHTML = ''
+
     const msg = document.createElement('span')
-    if (state.form.error !== null) {
-      msg.className = 'text-danger'
-      msg.innerText = state.form.error
-      msgContainer.append(msg)
-      // submitButton.disabled = true
-      input.classList.add('is-invalid')
-    }else{
-      // submitButton.disabled = false
+
+    if (state.form.error === null) {
       input.classList.remove('is-invalid')
       input.focus()
-    }
-    if (state.feeds !== null && state.form.error === null) {
+
+      if (state.feeds === null) {
+        return
+      }
+
       msg.className = 'text-success'
       msg.innerText = t('success')
       msgContainer.append(msg)
+
       renderPostsContainerLayout(state)
+      return
     }
+
+    msg.className = 'text-danger'
+    msg.innerText = state.form.error
+    msgContainer.append(msg)
+
+    input.classList.add('is-invalid')
   }
 
   function renderPostsContainerLayout(state) {
@@ -197,8 +213,6 @@ export function createTodoView(root) {
       button.className = 'btn btn-outline-primary'
       button.textContent = t('view')
 
-      const rssModal = document.getElementById('modal')
-
       button.addEventListener('click', () => {
         const modalTitle = document.getElementById('modal-title')
         const modalText = document.getElementById('modal-text')
@@ -217,14 +231,6 @@ export function createTodoView(root) {
       postRow.appendChild(buttonCol)
 
       container.appendChild(postRow)
-
-      const closeButtons = document.querySelectorAll('[data-close-modal]')
-      closeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          rssModal.style.display = 'none'
-          rssModal.classList.remove('show')
-        })
-      })
     })
   }
 
@@ -254,5 +260,6 @@ export function createTodoView(root) {
     onSubmit,
     onChange,
     onMarkRead,
+    onCloseModal,
   }
 }
