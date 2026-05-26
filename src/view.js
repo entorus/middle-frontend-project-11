@@ -35,7 +35,7 @@ export function createTodoView(root) {
                             <div class="form-text text-secondary mt-2">
                                 <span class="text-capitalize">${t('example')}</span>: https://lorem-rss.hexlet.app/feed
                             </div>
-                            <div id="validation-msg">
+                            <div id="validation-msg" class="feedback">
                             </div>
                         </div>
 
