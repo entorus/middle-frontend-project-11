@@ -18,7 +18,8 @@ i18next.init({
         view: 'View',
         read: 'Read full version',
         close: 'Close',
-        success: 'RSS successfully loaded'
+        success: 'RSS successfully loaded',
+        existing: 'RSS already exists'
       }
     },
     ru: {
@@ -35,8 +36,9 @@ i18next.init({
         view: 'Просмотр',
         read: 'Читать полностью',
         close: 'Закрыть',
-        success: 'RSS успешно загружен'
-      }
+        success: 'RSS успешно загружен',
+        existing: 'RSS уже существует'
+      } // todo Ресурс не содержит валидный RSS, Ошибка сети
     }
   }
 })

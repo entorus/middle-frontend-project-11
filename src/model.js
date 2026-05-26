@@ -26,7 +26,7 @@ export const rssActions = {
         const isExisting = rssModel.url === url
         if (isExisting) {
           rssModel.form.valid = false
-          rssModel.form.error = 'Такой URL уже есть'
+          rssModel.form.error = t('existing')
         }else{
           return true
         }
