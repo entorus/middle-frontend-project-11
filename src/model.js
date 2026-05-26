@@ -4,8 +4,9 @@ import { getFeed } from './api/rssApi.js'
 import { t } from './locales/i18n.js'
 
 export const rssModel = proxy({
-  urls: [],
+  url: null,
   feeds: null,
+  read: [],
   form: {
     valid: false,
     error: null,
@@ -22,7 +23,7 @@ export const rssActions = {
       .then(() => {
         rssModel.form.valid = true
         rssModel.form.error = null
-        const isExisting = rssModel.urls.includes(url)
+        const isExisting = rssModel.url === url
         if (isExisting) {
           rssModel.form.valid = false
           rssModel.form.error = 'Такой URL уже есть'
@@ -40,21 +41,26 @@ export const rssActions = {
     rssActions.validate(url)
       .then((isValid) => {
         if (isValid) {
-          rssModel.urls.push(url)
+          rssModel.url = url
           rssActions.startFeedUpdate(url)
         }
       })
   },
+  markRead(url) {
+    rssModel.read.push(url)
+  },
   startFeedUpdate(url) {
     function update() {
+      let timerId = null
       getFeed(url).then((res) => {
         rssModel.feeds = res
+        timerId = setTimeout(update, 5000)
       })
         .catch((error) => {
+          clearTimeout(timerId)
           console.error(error)
-        })
-        .finally(() => {
-          setTimeout(update, 5000)
+          rssModel.form.valid = false
+          rssModel.form.error = error
         })
     }
     update()

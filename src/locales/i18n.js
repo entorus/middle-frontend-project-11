@@ -15,7 +15,10 @@ i18next.init({
         notEmpty: 'Should not be empty',
         feeds: 'Feeds',
         posts: 'Posts',
-        view: 'View'
+        view: 'View',
+        read: 'Read full version',
+        close: 'Close',
+        success: 'RSS successfully loaded'
       }
     },
     ru: {
@@ -29,7 +32,10 @@ i18next.init({
         notEmpty: 'Не должно быть пустым',
         feeds: 'Фиды',
         posts: 'Посты',
-        view: 'Просмотр'
+        view: 'Просмотр',
+        read: 'Читать полностью',
+        close: 'Закрыть',
+        success: 'RSS успешно загружен'
       }
     }
   }

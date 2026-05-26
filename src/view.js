@@ -51,6 +51,23 @@ export function createTodoView(root) {
         <main class="flex-grow-1">
           <div id="rss-main-container" class="container py-4">
           </div>
+          <div id="rss-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 id="modal-title" class="modal-title">Modal title</h5>
+                  <button type="button" class="btn-close" data-close-modal aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p id="modal-text">Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                  <a id="rss-link-full" class="btn btn-primary">${t('read')}</a>
+                  <button type="button" class="btn btn-secondary" data-close-modal>${t('close')}</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
 
         <footer class="border-top bg-light py-3 text-center">
@@ -65,6 +82,8 @@ export function createTodoView(root) {
 
   const form = document.getElementById('rss-form')
   const input = document.getElementById('rss-url') // todo rename
+  const main = document.getElementById('rss-main-container')
+    
   function onSubmit(handler) {
     form.addEventListener('submit', (e) => {
       e.preventDefault()
@@ -78,32 +97,43 @@ export function createTodoView(root) {
       handler(e.target.value)
     })
   }
+  function onMarkRead(handler) {
+    main.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-post-read-btn]')
 
-  // changeLanguage('en')
+      if (! button) 
+        return
+
+      const href = button.closest('.row').querySelector('a').href
+      handler(href)
+    })
+  }
     
   function render(state) {
     const msgContainer = document.getElementById('validation-msg')
     const submitButton = document.getElementById('rss-submit-button')
     msgContainer.innerHTML = ''
+    const msg = document.createElement('div')
     if (state.form.error !== null) {
-      const msg = document.createElement('div')
-      msg.classList.add('text-danger')
+      msg.className = 'text-danger'
       msg.innerText = state.form.error
       msgContainer.append(msg)
       submitButton.disabled = true
       input.classList.add('is-invalid')
     }else{
-      msgContainer.innerHTML = '' // todo add successfull message
       submitButton.disabled = false
       input.classList.remove('is-invalid')
       input.focus()
     }
-    if (state.feeds !== null)
+    if (state.feeds !== null && state.form.error === null) {
+      msg.className = 'text-success'
+      msg.innerText = t('success')
+      msgContainer.append(msg)
       renderPostsContainerLayout(state)
+    }
   }
 
   function renderPostsContainerLayout(state) {
-    const main = document.getElementById('rss-main-container')
     main.innerHTML = ''
     const wrapper = document.createElement('div')
     wrapper.className = 'row mb-3'
@@ -137,7 +167,7 @@ export function createTodoView(root) {
   }
 
   function renderPosts(container, state) {
-    state.feeds.posts.forEach((post) => { // todo pass index here
+    state.feeds.posts.forEach((post) => {
       const postRow = document.createElement('div')
       postRow.className = 'row mb-3'
 
@@ -147,6 +177,10 @@ export function createTodoView(root) {
       const link = document.createElement('a')
       link.href = post.link
       link.textContent = post.title
+      if (state.read.includes(post.link))
+        link.classList.add('fw-normal')
+      else
+        link.classList.add('fw-bold')
 
       linkCol.appendChild(link)
 
@@ -155,11 +189,23 @@ export function createTodoView(root) {
 
       const button = document.createElement('button')
       button.type = 'button'
+      button.dataset.postReadBtn = ''
       button.className = 'btn btn-outline-primary'
       button.textContent = t('view')
 
-      // button.addEventListener('click', () => {
-      // })
+      const rssModal = document.getElementById('rss-modal')
+
+      button.addEventListener('click', () => {
+        const modalTitle = document.getElementById('modal-title')
+        const modalText = document.getElementById('modal-text')
+        const modalLink = document.getElementById('rss-link-full')
+        rssModal.display = 'block'
+        rssModal.classList.add('show')
+        modalTitle.innerText = post.title
+        modalText.innerText = post.description
+        modalLink.href = post.link
+        rssModal.style.display = 'block'
+      })
 
       buttonCol.appendChild(button)
 
@@ -167,6 +213,14 @@ export function createTodoView(root) {
       postRow.appendChild(buttonCol)
 
       container.appendChild(postRow)
+
+      const closeButtons = document.querySelectorAll('[data-close-modal]')
+      closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          rssModal.style.display = 'none'
+          rssModal.classList.remove('show')
+        })
+      })
     })
   }
 
@@ -195,6 +249,7 @@ export function createTodoView(root) {
     render,
     onSubmit,
     onChange,
+    onMarkRead,
   }
 }
 

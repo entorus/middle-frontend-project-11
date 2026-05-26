@@ -3,8 +3,7 @@ import { subscribe, snapshot } from 'valtio/vanilla'
 export function createTodoController(model, actions, view) {
   view.onSubmit(actions.add)
   view.onChange(actions.validate)
-  //   view.onRemove(actions.remove)
-  //   view.onFilter(actions.setFilter)
+  view.onMarkRead(actions.markRead)
 
   function render() {
     view.render(snapshot(model))

@@ -30,7 +30,8 @@ function parseXML(data) {
 }
 
 export function getFeed(url) {
-  return httpClient.get('/feed').then((response) => {
+  const preparedUrl = `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}`
+  return httpClient.get(preparedUrl).then((response) => {
     return parseXML(response.data?.contents)
   })
 }
