@@ -230,7 +230,7 @@ export function createTodoView(root) {
     const feedRow = document.createElement('div')
     feedRow.className = 'row mb-3'
 
-    const feedTitle = document.createElement('span')
+    const feedTitle = document.createElement('h3')
     feedTitle.textContent = feed.title
 
     const br = document.createElement('br')
