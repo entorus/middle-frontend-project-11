@@ -58,7 +58,6 @@ export const rssActions = {
           timerId = setTimeout(update, 5000)
         })
         .catch((error) => {
-          console.error(111, error)
           clearTimeout(timerId)
           rssModel.form.valid = false
           if (error.message === 'Invalid XML response') {
