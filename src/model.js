@@ -64,10 +64,10 @@ export const rssActions = {
 
           if (error.message === 'Invalid XML response') {
             rssModel.form.error = t('notContainValidRSS')
-          } else if (!error.response) {
-            rssModel.form.error = t('networkError')
-          } else {
+          } else if (error.response) {
             rssModel.form.error = error.message
+          } else {
+            rssModel.form.error = t('networkError')
           }
         })
     }
