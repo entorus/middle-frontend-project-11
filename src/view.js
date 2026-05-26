@@ -112,17 +112,17 @@ export function createTodoView(root) {
     
   function render(state) {
     const msgContainer = document.getElementById('validation-msg')
-    const submitButton = document.getElementById('rss-submit-button')
+    // const submitButton = document.getElementById('rss-submit-button')
     msgContainer.innerHTML = ''
     const msg = document.createElement('span')
     if (state.form.error !== null) {
       msg.className = 'text-danger'
       msg.innerText = state.form.error
       msgContainer.append(msg)
-      submitButton.disabled = true
+      // submitButton.disabled = true
       input.classList.add('is-invalid')
     }else{
-      submitButton.disabled = false
+      // submitButton.disabled = false
       input.classList.remove('is-invalid')
       input.focus()
     }
