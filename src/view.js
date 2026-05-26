@@ -64,7 +64,7 @@ export function createTodoView(root) {
                 </div>
                 <div class="modal-footer">
                   <a id="rss-link-full" class="btn btn-primary">${t('read')}</a>
-                  <button type="button" class="btn btn-secondary" data-close-modal>${t('close')}</button>
+                  <button data-bs-dismiss="modal" type="button" class="btn btn-secondary" data-close-modal>${t('close')}</button>
                 </div>
               </div>
             </div>
@@ -82,7 +82,7 @@ export function createTodoView(root) {
     `
 
   const form = document.getElementById('rss-form')
-  const input = document.getElementById('rss-url') // todo rename
+  const input = document.getElementById('rss-url')
   const main = document.getElementById('rss-main-container')
     
   function onSubmit(handler) {
@@ -163,7 +163,7 @@ export function createTodoView(root) {
 
     wrapper.appendChild(feedsContainer)
 
-    const postsList = document.createElement('ul') //todo refactor
+    const postsList = document.createElement('ul')
     postsContainer.appendChild(postsList)
 
     renderFeeds(feedsContainer, state)
@@ -256,6 +256,3 @@ export function createTodoView(root) {
     onMarkRead,
   }
 }
-
-// invalid-feedback
-// valid-feedback

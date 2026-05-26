@@ -1,7 +1,7 @@
 import i18next from 'i18next'
 
 i18next.init({
-  lng: 'ru', // if you're using a language detector, do not define the lng option
+  lng: 'ru',
   debug: true,
   resources: {
     en: {
@@ -42,7 +42,7 @@ i18next.init({
         existing: 'RSS уже существует',
         notContainValidRSS: 'Ресурс не содержит валидный RSS',
         networkError: 'Ошибка сети'
-      } // todo Ресурс не содержит валидный RSS, Ошибка сети
+      }
     }
   }
 })
