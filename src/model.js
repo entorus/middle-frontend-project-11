@@ -50,20 +50,30 @@ export const rssActions = {
     rssModel.read.push(url)
   },
   startFeedUpdate(url) {
-    function update() {
-      let timerId = null
-      getFeed(url).then((res) => {
-        rssModel.feeds = res
-        timerId = setTimeout(update, 5000)
-      })
+    const update = () => {
+      getFeed(url)
+        .then((feed) => {
+          rssModel.feeds = feed
+          rssModel.form.valid = true
+          rssModel.form.error = null
+        })
         .catch((error) => {
-          clearTimeout(timerId)
-          console.error(error)
-          // error.response.status
           rssModel.form.valid = false
-          rssModel.form.error = (error.response.status === 500) ? t('notContainValidRSS') : error
+          if (!error.response) {
+            rssModel.form.error = t('networkError')
+            console.error(error)
+            return
+          }
+          rssModel.form.error = error.response.status === 500
+            ? t('notContainValidRSS')
+            : error.message
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(update, 5000)
         })
     }
+
     update()
   }
 }

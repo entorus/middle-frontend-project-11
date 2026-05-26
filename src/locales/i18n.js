@@ -20,7 +20,8 @@ i18next.init({
         close: 'Close',
         success: 'RSS successfully loaded',
         existing: 'RSS already exists',
-        notContainValidRSS: 'The resource does not contain a valid RSS feed'
+        notContainValidRSS: 'The resource does not contain a valid RSS feed',
+        networkError: 'Network Error'
       }
     },
     ru: {
@@ -39,7 +40,8 @@ i18next.init({
         close: 'Закрыть',
         success: 'RSS успешно загружен',
         existing: 'RSS уже существует',
-        notContainValidRSS: 'Ресурс не содержит валидный RSS'
+        notContainValidRSS: 'Ресурс не содержит валидный RSS',
+        networkError: 'Ошибка сети'
       } // todo Ресурс не содержит валидный RSS, Ошибка сети
     }
   }

@@ -142,7 +142,7 @@ export function createTodoView(root) {
 
     const postsContainer = document.createElement('div')
     postsContainer.id = 'rss-posts-container'
-    postsContainer.className = 'col-md-8 themed-grid-col'
+    postsContainer.className = 'posts col-md-8 themed-grid-col'
 
     const postsTitle = document.createElement('h3')
     postsTitle.className = 'mb-3'
