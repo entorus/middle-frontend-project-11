@@ -59,8 +59,9 @@ export const rssActions = {
         .catch((error) => {
           clearTimeout(timerId)
           console.error(error)
+          // error.response.status
           rssModel.form.valid = false
-          rssModel.form.error = error
+          rssModel.form.error = error + ' ' + error.response.status
         })
     }
     update()
