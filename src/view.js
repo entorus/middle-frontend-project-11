@@ -23,12 +23,13 @@ export function createTodoView(root) {
                             </label>
 
                             <input
-                                id="rss-url"
-                                name="rssUrl"
-                                type="url"
-                                class="form-control form-control-lg fw-semibold"
-                                placeholder="${t('link')} RSS"
-                                required
+                              id="rss-url"
+                              name="rssUrl"
+                              type="url"
+                              class="form-control form-control-lg fw-semibold"
+                              placeholder="${t('link')} RSS"
+                              aria-label="url"
+                              required
                             />
 
                             <div class="form-text text-secondary mt-2">
