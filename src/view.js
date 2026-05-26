@@ -52,12 +52,12 @@ export function createTodoView(root) {
         <main class="flex-grow-1">
           <div id="rss-main-container" class="container py-4">
           </div>
-          <div id="rss-modal" class="modal fade" tabindex="-1">
+          <div id="modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 id="modal-title" class="modal-title">Modal title</h5>
-                  <button type="button" class="btn-close" data-close-modal aria-label="Close"></button>
+                  <button data-bs-dismiss="modal" type="button" class="btn-close" data-close-modal aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <p id="modal-text">Modal body text goes here.</p>
@@ -163,13 +163,16 @@ export function createTodoView(root) {
 
     wrapper.appendChild(feedsContainer)
 
+    const postsList = document.createElement('ul') //todo refactor
+    postsContainer.appendChild(postsList)
+
     renderFeeds(feedsContainer, state)
-    renderPosts(postsContainer, state)
+    renderPosts(postsList, state)
   }
 
   function renderPosts(container, state) {
     state.feeds.posts.forEach((post) => {
-      const postRow = document.createElement('div')
+      const postRow = document.createElement('li')
       postRow.className = 'row mb-3'
 
       const linkCol = document.createElement('div')
@@ -179,7 +182,7 @@ export function createTodoView(root) {
       link.href = post.link
       link.textContent = post.title
       if (state.read.includes(post.link))
-        link.classList.add('fw-normal')
+        link.className = 'fw-normal link-secondary'
       else
         link.classList.add('fw-bold')
 
@@ -194,7 +197,7 @@ export function createTodoView(root) {
       button.className = 'btn btn-outline-primary'
       button.textContent = t('view')
 
-      const rssModal = document.getElementById('rss-modal')
+      const rssModal = document.getElementById('modal')
 
       button.addEventListener('click', () => {
         const modalTitle = document.getElementById('modal-title')
