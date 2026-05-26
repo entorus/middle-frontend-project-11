@@ -153,7 +153,7 @@ export function createTodoView(root) {
 
     const feedsContainer = document.createElement('div')
     feedsContainer.id = 'rss-feed-container'
-    feedsContainer.className = 'col-6 col-md-4 themed-grid-col'
+    feedsContainer.className = 'feeds col-6 col-md-4 themed-grid-col'
 
     const feedsTitle = document.createElement('h3')
     feedsTitle.className = 'mb-3'
