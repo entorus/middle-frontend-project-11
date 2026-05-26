@@ -29,7 +29,7 @@ function parseXML(data) {
 }
 
 export function getFeed(url) {
-  const preparedUrl = `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}`
+  const preparedUrl = `https://allorigins.hexlet.app/get?disableCache=true&?url=${encodeURIComponent(url)}`
   return httpClient.get(preparedUrl).then((response) => {
     return parseXML(response.data?.contents)
   })
