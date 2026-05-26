@@ -55,8 +55,6 @@ export const rssActions = {
       getFeed(url)
         .then((feed) => {
           rssModel.feeds = feed
-          rssModel.form.valid = true
-          rssModel.form.error = null
           timerId = setTimeout(update, 5000)
         })
         .catch((error) => {
