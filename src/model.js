@@ -50,27 +50,28 @@ export const rssActions = {
     rssModel.read.push(url)
   },
   startFeedUpdate(url) {
+    let timerId = null
     const update = () => {
       getFeed(url)
         .then((feed) => {
           rssModel.feeds = feed
           rssModel.form.valid = true
           rssModel.form.error = null
+          timerId = setTimeout(update, 5000)
         })
         .catch((error) => {
+          clearTimeout(timerId)
           rssModel.form.valid = false
-          if (!error.response) {
+          if (error.message === 'Invalid XML response') {
+            rssModel.form.error = t('notContainValidRSS')
+            return
+          }
+          if (! error.response) {
             rssModel.form.error = t('networkError')
             console.error(error)
             return
           }
-          rssModel.form.error = error.response.status === 500
-            ? t('notContainValidRSS')
-            : error.message
           console.error(error)
-        })
-        .finally(() => {
-          setTimeout(update, 5000)
         })
     }
 

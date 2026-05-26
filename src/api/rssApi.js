@@ -5,9 +5,8 @@ function parseXML(data) {
   const xml = parser.parseFromString(data, 'text/xml')
   const parserError = xml.querySelector('parsererror')
 
-  if (parserError) {
+  if (parserError)
     throw new Error('Invalid XML response')
-  }
 
   const channelInfo = xml.querySelector('channel')
 
@@ -33,7 +32,5 @@ export function getFeed(url) {
   const preparedUrl = `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}`
   return httpClient.get(preparedUrl).then((response) => {
     return parseXML(response.data?.contents)
-  }).catch(e => {
-    console.error(e)
   })
 }
