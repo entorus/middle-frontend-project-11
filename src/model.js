@@ -61,7 +61,7 @@ export const rssActions = {
           console.error(error)
           // error.response.status
           rssModel.form.valid = false
-          rssModel.form.error = error + ' ' + error.response.status
+          rssModel.form.error = (error.response.status === 500) ? t('notContainValidRSS') : error
         })
     }
     update()
